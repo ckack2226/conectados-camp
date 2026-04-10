@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conectados Camp </title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Barlow:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --gold: #D4AF37;
+      --gold-light: #EDD87A;
+      --gold-dark: #A8852A;
+      --navy: #1E3A5F;
+      --black: #0A0A0A;
+      --dark: #111111;
+      --card: #161616;
+      --white: #FFFFFF;
+      --muted: rgba(255, 255, 255, 0.55);
+      --border: rgba(212, 175, 55, 0.18);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      background: var(--black);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 1.5rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(ellipse, rgba(212, 175, 55, 0.10) 0%, transparent 68%);
+      pointer-events: none;
+      animation: pulse 5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 0.6;
+        transform: translateX(-50%) scale(1);
+      }
+
+      50% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1.08);
+      }
+    }
+
+    .hero-stars {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 15% 20%, rgba(212, 175, 55, 0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 80% 10%, rgba(255, 255, 255, 0.3) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 60% 70%, rgba(212, 175, 55, 0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 85%, rgba(255, 255, 255, 0.2) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 55%, rgba(212, 175, 55, 0.25) 0%, transparent 100%),
+        radial-gradient(1px 1px at 5% 60%, rgba(255, 255, 255, 0.15) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .hero-logo {
+      width: clamp(250px, 60vw, 700px);
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.25));
+      animation: fadeUp 0.9s ease both;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid var(--border);
+      color: var(--gold);
+      font-size: 17px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      padding: 5px 18px;
+      border-radius: 2px;
+      margin-bottom: 1.8rem;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.9s 0.15s ease both;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 10vw, 6.5rem);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -2px;
+      color: var(--white);
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.9s 0.25s ease both;
+    }
+
+    .hero-title span {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--muted);
+      font-style: italic;
+      margin: 1.2rem 0 0;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.9s 0.35s ease both;
+    }
+
+    .hero-dates {
+      margin: 2rem 0 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(212, 175, 55, 0.07);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      color: var(--gold-light);
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      padding: 10px 24px;
+      border-radius: 40px;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.9s 0.45s ease both;
+    }
+
+    .hero-dates svg {
+      width: 15px;
+      height: 15px;
+      fill: var(--gold);
+    }
+
+    /* ─── COUNTDOWN ─── */
+    .countdown-wrap {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin: 0 0 2.5rem;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.9s 0.5s ease both;
+    }
+
+    .cd-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(212, 175, 55, 0.06);
+      border: 1px solid rgba(212, 175, 55, 0.22);
+      border-radius: 8px;
+      padding: 12px 16px 10px;
+      min-width: 64px;
+    }
+
+    .cd-number {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+
+    .cd-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.35);
+      margin-top: 5px;
+    }
+
+    .cd-sep {
+      font-size: 2rem;
+      color: rgba(212, 175, 55, 0.4);
+      align-self: center;
+      line-height: 1;
+      margin-top: -6px;
+    }
+
+    .btn-gold {
+      display: inline-block;
+      background: var(--gold);
+      color: #000;
+      font-family: 'Barlow', sans-serif;
+      font-size: 17px;
+      font-weight: bold;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      padding: 16px 42px;
+      border-radius: 2px;
+      text-decoration: none;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.9s 0.55s ease both;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-gold:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+    }
+
+    .hero-divider {
+      width: 50px;
+      height: 1px;
+      background: var(--border);
+      margin: 4rem auto 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── SECCIONES COMUNES ─── */
+    section {
+      padding: 6rem 1.5rem;
+    }
+
+    .container {
+      max-width: 1060px;
+      margin: 0 auto;
+    }
+
+    .container-sm {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 20px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4.5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title em {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    /* ─── DESCRIPCIÓN ─── */
+    .desc-section {
+      background: var(--dark);
+    }
+
+    .desc-lead {
+      font-size: 1.3rem;
+      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.9;
+      margin-bottom: 2.5rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2.5rem 0;
+    }
+
+    .feature-item {
+      background: #161616;
+      padding: 1.8rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      transition: background 0.25s, transform 0.15s;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .feature-item:hover {
+      background: #1c1c1c;
+      transform: translateY(-2px);
+    }
+
+    .feature-icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .feature-text {
+      font-size: 17px;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.6;
+    }
+
+    .desc-quote {
+      border-left: 2px solid var(--gold);
+      padding-left: 1.5rem;
+      margin-top: 2.5rem;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.5rem;
+      color: rgba(255, 255, 255, 0.65);
+      line-height: 1.8;
+    }
+
+    .desc-quote strong {
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    /* ─── CRONOGRAMA ─── */
+    .schedule-section {
+      background: var(--black);
+    }
+
+    .days-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .day-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .day-header {
+      background: rgba(212, 175, 55, 0.06);
+      border-bottom: 1px solid var(--border);
+      padding: 1.2rem 1.4rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.3px;
+    }
+
+    .day-body {
+      padding: 1.4rem;
+    }
+
+    .block {
+      margin-bottom: 1.4rem;
+    }
+
+    .block:last-child {
+      margin-bottom: 0;
+    }
+
+    .block-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 2px;
+      margin-bottom: 0.7rem;
+      display: inline-block;
+    }
+
+    .lbl-talleres {
+      background: rgba(30, 58, 95, 0.45);
+      color: #7BBCE8;
+      border: 1px solid rgba(30, 58, 95, 0.7);
+    }
+
+    .lbl-juegos {
+      background: rgba(212, 175, 55, 0.1);
+      color: var(--gold);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+    }
+
+    .lbl-especial {
+      background: rgba(255, 210, 0, 0.07);
+      color: #FFD700;
+      border: 1px solid rgba(255, 210, 0, 0.22);
+    }
+
+    .lbl-cierre {
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .block-item {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.58);
+      padding: 3px 0;
+      line-height: 1.6;
+    }
+
+    /* ─── GALERÍA / CARRUSEL ─── */
+    .gallery-section {
+      background: var(--dark);
+      text-align: center;
+    }
+
+    .carousel-outer {
+      position: relative;
+      max-width: 640px;
+      margin: 3rem auto 0;
+      user-select: none;
+    }
+
+    .carousel-track-wrap {
+      overflow: hidden;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      aspect-ratio: 4/3;
+      background: #181818;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      position: absolute;
+      inset: 0;
+    }
+
+    .carousel-slide .ph-icon {
+      opacity: 0.2;
+    }
+
+    .carousel-slide .ph-label {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.2);
+      letter-spacing: 1px;
+      margin-top: 8px;
+    }
+
+    /* Flechas */
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(10, 10, 10, 0.75);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      color: var(--gold);
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: background 0.2s, border-color 0.2s;
+      line-height: 1;
+    }
+
+    .carousel-btn:hover {
+      background: rgba(212, 175, 55, 0.12);
+      border-color: var(--gold);
+    }
+
+    .carousel-btn.prev {
+      left: -20px;
+    }
+
+    .carousel-btn.next {
+      right: -20px;
+    }
+
+    /* Dots */
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .carousel-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(212, 175, 55, 0.25);
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
+      padding: 0;
+    }
+
+    .carousel-dot.active {
+      background: var(--gold);
+      transform: scale(1.3);
+    }
+
+    .gallery-note {
+      margin-top: 1.2rem;
+      font-size: 25px;
+      font-weight: bold;
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    /* ─── INSCRIPCIÓN CTA ─── */
+    .cta-section {
+      background: var(--gold);
+      padding: 6rem 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(ellipse at 50% 100%, rgba(0, 0, 0, 0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .cta-eyebrow {
+      font-size: 17px;
+      font-weight: bold;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.5);
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .cta-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 700;
+      color: #000;
+      line-height: 1.05;
+      position: relative;
+    }
+
+    .cta-price {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      color: #000;
+      margin: 1.2rem 0;
+      position: relative;
+    }
+
+    .cta-location {
+      font-size: 20px;
+      font-weight: bold;
+      color: rgba(0, 0, 0, 0.55);
+      margin-bottom: 2.5rem;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-black {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #000;
+      color: #fff;
+      font-family: 'Barlow', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 18px 46px;
+      border-radius: 2px;
+      text-decoration: none;
+      position: relative;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-black:hover {
+      background: #1a1a1a;
+      transform: translateY(-1px);
+    }
+
+    .btn-black .wa-icon {
+      width: 20px;
+      height: 20px;
+      fill: #25D366;
+      flex-shrink: 0;
+    }
+
+    .cta-urgency {
+      margin-top: 1.8rem;
+      font-size: 17px;
+      color: rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    .cta-urgency strong {
+      color: #000;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid rgba(212, 175, 55, 0.1);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+    }
+
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--gold);
+      letter-spacing: 1px;
+      margin-bottom: 0.4rem;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 600px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .carousel-btn.prev {
+        left: 4px;
+      }
+
+      .carousel-btn.next {
+        right: 4px;
+      }
+
+      .countdown-wrap {
+        gap: 8px;
+      }
+
+      .cd-unit {
+        min-width: 52px;
+        padding: 10px 10px 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-stars"></div>
+
+    <div class="hero-badge">Campamento Juvenil 2026</div>
+    <img class="hero-logo" src="/camp/images/logito.png" alt="Conectados Camp logo">
+    <p class="hero-subtitle">Una experiencia que marcará tu vida</p>
+    <div class="hero-dates">
+      <svg viewBox="0 0 16 16">
+        <path
+          d="M4 1v1H2a1 1 0 00-1 1v11a1 1 0 001 1h12a1 1 0 001-1V3a1 1 0 00-1-1h-2V1h-1v1H5V1H4zm-2 4h12v9H2V5zm2 2v1h2V7H4zm3 0v1h2V7H7zm3 0v1h2V7h-2zM4 10v1h2v-1H4zm3 0v1h2v-1H7z" />
+      </svg>
+      16, 17 y 18 de julio
+    </div>
+
+    <!-- COUNTDOWN -->
+    <div class="countdown-wrap" id="countdown">
+      <div class="cd-unit"><span class="cd-number" id="cd-days">--</span><span class="cd-label">Días</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit"><span class="cd-number" id="cd-hours">--</span><span class="cd-label">Horas</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit"><span class="cd-number" id="cd-minutes">--</span><span class="cd-label">Min</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit"><span class="cd-number" id="cd-seconds">--</span><span class="cd-label">Seg</span></div>
+    </div>
+
+    <a href="#inscripcion" class="btn-gold">Reservar mi cupo</a>
+    <div class="hero-divider"></div>
+  </header>
+
+  <!-- DESCRIPCIÓN -->
+  <section class="desc-section">
+    <div class="container-sm">
+      <p class="section-label">¿Qué es Conectados Camp?</p>
+      <h2 class="section-title">Más que un campamento…<br><em>un encuentro real</em></h2>
+      <p class="desc-lead">Conectados Camp es una experiencia diseñada para encender tu fe, activar tu propósito y
+        conectarte con lo que Dios quiere hacer en tu vida. No es solo un evento… es un encuentro real. Un espacio donde
+        desconectas del ruido y te conectas con lo eterno.</p>
+      <div class="features-grid">
+        <div class="feature-item">
+          <span class="feature-icon">✨</span>
+          <p class="feature-text">Momentos de adoración que transforman</p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🔥</span>
+          <p class="feature-text">Palabra que confronta e inspira</p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🤝</span>
+          <p class="feature-text">Conexión con personas que van en tu misma dirección</p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">⚡</span>
+          <p class="feature-text">Activaciones espirituales que marcarán tu vida</p>
+        </div>
+      </div>
+      <blockquote class="desc-quote">
+        Aquí no vienes a ver… vienes a experimentar.<br>
+        <strong>Porque cuando te conectas con Dios, todo cambia.</strong><br>
+        Este es tu momento. Este es tu llamado.
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- CRONOGRAMA -->
+  <section class="schedule-section">
+    <div class="container">
+      <p class="section-label" style="text-align:center">3 días intensos</p>
+      <h2 class="section-title" style="text-align:center">Cronograma del<br><em>Campamento</em></h2>
+      <div class="days-grid">
+
+        <!-- DÍA 1 -->
+        <div class="day-card">
+          <div class="day-header">Día 1 — Conectando con Dios</div>
+          <div class="day-body">
+            <div class="block">
+              <span class="block-label lbl-talleres">Talleres</span>
+              <p class="block-item">9:00 AM — Conectados con Dios</p>
+              <p class="block-item">10:30 AM — Mi Identidad, Mi Propósito</p>
+              <p class="block-item">2:00 PM — Relaciones que Edifican</p>
+            </div>
+            <div class="block">
+              <span class="block-label lbl-juegos">Juegos</span>
+              <p class="block-item">4:30 PM — Juegos de Integración</p>
+              <p class="block-item">6:00 PM — Rally Conectados</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- DÍA 2 -->
+        <div class="day-card">
+          <div class="day-header">Día 2 — Activando mi vida 🔥</div>
+          <div class="day-body">
+            <div class="block">
+              <span class="block-label lbl-talleres">Talleres</span>
+              <p class="block-item">9:00 AM — Sanando el Corazón</p>
+              <p class="block-item">10:30 AM — Activando mis Dones</p>
+              <p class="block-item">2:00 PM — Decisiones que Marcan</p>
+            </div>
+            <div class="block">
+              <span class="block-label lbl-juegos">Juegos</span>
+              <p class="block-item">3:30 PM — Olimpiadas Conectados</p>
+              <p class="block-item">5:30 PM — Desafío Extremo</p>
+            </div>
+            <div class="block">
+              <span class="block-label lbl-especial">Noche Especial 🌙</span>
+              <p class="block-item">7:30 PM — Noche de la Hora Loca</p>
+              <p class="block-item">Música, luces y ambiente de fiesta</p>
+              <p class="block-item">Retos por equipos con premios</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- DÍA 3 -->
+        <div class="day-card">
+          <div class="day-header">Día 3 — Viviendo lo aprendido</div>
+          <div class="day-body">
+            <div class="block">
+              <span class="block-label lbl-talleres">Talleres</span>
+              <p class="block-item">9:00 AM — Viviendo lo que Creo</p>
+              <p class="block-item">10:30 AM — Enviados con Propósito</p>
+            </div>
+            <div class="block">
+              <span class="block-label lbl-cierre">Cierre Especial 🎉</span>
+              <p class="block-item">3:00 PM — Tarde de Colores</p>
+              <p class="block-item">Música, celebración y unidad</p>
+              <p class="block-item">Momentos para recordar</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERÍA / CARRUSEL -->
+  <section class="gallery-section">
+    <div class="container">
+      <p class="section-label">Memorias que inspiran</p>
+      <h2 class="section-title">Mira lo que Dios<br><em>hizo en 2025</em></h2>
+
+      <div class="carousel-outer">
+        <button class="carousel-btn prev" id="carousel-prev" aria-label="Anterior">&#8592;</button>
+        <div class="carousel-track-wrap">
+          <div class="carousel-track" id="carousel-track">
+
+            <!-- Slide 1 -->
+            <div class="carousel-slide">
+              <svg class="ph-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(212,175,55,0.6)"
+                stroke-width="1.3">
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <circle cx="9" cy="10" r="2" />
+                <path d="M21 19l-5-5-4 4-3-3-3 4" />
+              </svg>
+              <img src="/camp/images/1.jpeg" alt="Camp 2025 foto 1">
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="carousel-slide">
+              <svg class="ph-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(212,175,55,0.6)"
+                stroke-width="1.3">
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <circle cx="9" cy="10" r="2" />
+                <path d="M21 19l-5-5-4 4-3-3-3 4" />
+              </svg>
+              <img src="/camp/images/2.jpeg" alt="Camp 2025 foto 2">
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="carousel-slide">
+              <svg class="ph-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(212,175,55,0.6)"
+                stroke-width="1.3">
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <circle cx="9" cy="10" r="2" />
+                <path d="M21 19l-5-5-4 4-3-3-3 4" />
+              </svg>
+              <img src="/camp/images/3.jpeg" alt="Camp 2025 foto 3">
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="carousel-slide">
+              <svg class="ph-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(212,175,55,0.6)"
+                stroke-width="1.3">
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <circle cx="9" cy="10" r="2" />
+                <path d="M21 19l-5-5-4 4-3-3-3 4" />
+              </svg>
+              <img src="/camp/images/4.jpeg" alt="Camp 2025 foto 4">
+            </div>
+
+            <!-- Slide 5 -->
+            <div class="carousel-slide">
+              <svg class="ph-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(212,175,55,0.6)"
+                stroke-width="1.3">
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <circle cx="9" cy="10" r="2" />
+                <path d="M21 19l-5-5-4 4-3-3-3 4" />
+              </svg>
+              <img src="/camp/images/5.jpeg" alt="Camp 2025 foto 5">
+            </div>
+
+          </div>
+        </div>
+        <button class="carousel-btn next" id="carousel-next" aria-label="Siguiente">&#8594;</button>
+
+        <div class="carousel-dots" id="carousel-dots">
+          <button class="carousel-dot active" data-index="0"></button>
+          <button class="carousel-dot" data-index="1"></button>
+          <button class="carousel-dot" data-index="2"></button>
+          <button class="carousel-dot" data-index="3"></button>
+          <button class="carousel-dot" data-index="4"></button>
+        </div>
+      </div>
+
+      <p class="gallery-note">Invitados Especiales: Pastor Miguel Hidalgo Montenegro y Pastora Ana Montenegro</p>
+    </div>
+  </section>
+
+  <!-- INSCRIPCIÓN -->
+  <section class="cta-section" id="inscripcion">
+    <p class="cta-eyebrow">¡Cupos limitados!</p>
+    <h2 class="cta-title">Asegura tu lugar ahora</h2>
+    <p class="cta-price">$200.000 COP</p>
+    <p class="cta-location">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="rgba(0,0,0,0.5)">
+        <path
+          d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+      </svg>
+      Centro Cristiano De Integración Gerizim
+    </p>
+    <a href="https://wa.me/573503761429?text=Hola%20quiero%20reservar%20mi%20cupo%20para%20Conectados%20Camp"
+      target="_blank" class="btn-black">
+      <svg class="wa-icon" viewBox="0 0 24 24">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+        <path
+          d="M12 2C6.486 2 2 6.486 2 12c0 1.743.452 3.382 1.243 4.808L2 22l5.332-1.219A9.945 9.945 0 0012 22c5.514 0 10-4.486 10-10S17.514 2 12 2zm0 18a7.952 7.952 0 01-4.063-1.113l-.291-.173-3.166.724.759-3.083-.19-.301A7.944 7.944 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z" />
+      </svg>
+      Reservar por WhatsApp
+    </a>
+    <p class="cta-urgency">16, 17 y 18 de julio · <strong>¡No te quedes por fuera!</strong></p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-brand">CONECTADOS CAMP</p>
+    <p class="footer-copy">© 2026 Conectados Camp · Todos los derechos reservados</p>
+  </footer>
+
+  <script>
+    /* ─── COUNTDOWN ─── */
+    function updateCountdown() {
+      var target = new Date('2026-07-16T00:00:00');
+      var now = new Date();
+      var diff = target - now;
+
+      if (diff <= 0) {
+        document.getElementById('cd-days').textContent = '0';
+        document.getElementById('cd-hours').textContent = '00';
+        document.getElementById('cd-minutes').textContent = '00';
+        document.getElementById('cd-seconds').textContent = '00';
+        return;
+      }
+
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById('cd-days').textContent = days;
+      document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('cd-minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('cd-seconds').textContent = String(seconds).padStart(2, '0');
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    /* ─── CARRUSEL ─── */
+    var track = document.getElementById('carousel-track');
+    var dots = document.querySelectorAll('.carousel-dot');
+    var total = 5;
+    var current = 0;
+    var autoTimer;
+
+    function goTo(index) {
+      current = (index + total) % total;
+      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      dots.forEach(function (d, i) {
+        d.classList.toggle('active', i === current);
+      });
+    }
+
+    function startAuto() {
+      autoTimer = setInterval(function () { goTo(current + 1); }, 4000);
+    }
+
+    function resetAuto() {
+      clearInterval(autoTimer);
+      startAuto();
+    }
+
+    document.getElementById('carousel-prev').addEventListener('click', function () {
+      goTo(current - 1); resetAuto();
+    });
+
+    document.getElementById('carousel-next').addEventListener('click', function () {
+      goTo(current + 1); resetAuto();
+    });
+
+    dots.forEach(function (dot) {
+      dot.addEventListener('click', function () {
+        goTo(parseInt(dot.getAttribute('data-index'))); resetAuto();
+      });
+    });
+
+    /* Swipe touch */
+    var touchStartX = 0;
+    track.parentElement.addEventListener('touchstart', function (e) {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    track.parentElement.addEventListener('touchend', function (e) {
+      var dx = e.changedTouches[0].screenX - touchStartX;
+      if (Math.abs(dx) > 40) { goTo(dx < 0 ? current + 1 : current - 1); resetAuto(); }
+    }, { passive: true });
+
+    startAuto();
+  </script>
+
+</body>
+
+</html>
